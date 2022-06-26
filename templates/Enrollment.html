@@ -19,6 +19,7 @@
 
         </canvas>
         <form id="form" action="submitData" method="post" autocomplete="off">
+            {% csrf_token %}
             <div class="input-field">
                 <label class="label-text">Name:</label><br>
                 <input class="text-input" type="text" name="name" id="name" placeholder="name">
