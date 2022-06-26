@@ -1,0 +1,117 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    /* height: 100vh;
+    width: 100vw; */
+    overflow: hidden;
+    box-sizing: border-box;
+}
+#nav-bar{
+    background-color: #146af5;
+    width: 100vw;
+    padding: 10px;
+}
+#header-text{
+    color: aliceblue;
+    font-size: 32px;
+}
+
+
+#intro-text{
+    margin: 10px;
+    color: #0d3c88;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#middle-context{
+    width: 80%;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    display: flex;
+    transform: translate(-50%,-50%);
+    /* background-color: aquamarine; */
+}
+.error-msg{
+    color: red;
+    margin: 2px;
+}
+#canvas{
+    width: 400px;
+    height: 400px;
+    background-color: gray;
+    border: 1px solid black;
+}
+
+#form{
+    margin: 20px;
+}
+
+#notify-text{
+    font-size: 18px;
+    margin: 10px;
+    width: 25vw;
+    font-weight: bolder;
+}
+
+.input-field{
+    padding: 5px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+.label-text{
+    margin: 5px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.text-input{
+    margin: 5px;
+    padding: 5px;
+    font-size: 16px;
+    width: 25vw;
+    border: 1px solid black;
+}
+
+.btn{
+    margin-top: 20px;
+    margin-left: 10px;
+    color: white;
+    background-color: #146af5;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: #0d3c88;
+}
+#footer{
+    position: absolute;
+    bottom: 0;
+    background-color: #146af5;
+    width: 100vw;
+    display: inline-flex;
+}
+
+.navigation-text{
+    font-size: 22px;
+    color: aliceblue;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid black;
+    text-decoration: none;
+}
+
+.navigation-text:hover{
+    background-color: #0d3c88;
+    /* color: #146af5; */
+}
