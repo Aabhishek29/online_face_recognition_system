@@ -14,7 +14,7 @@ class EnrollStudent(models.Model):
     emailId = models.EmailField(
         blank=False,null=False
     )
-    img = models.ImageField(height_field=512,width_field=512)
+    img = models.ImageField(upload_to = 'images/')
 
     def __str__(self) -> str:
         return self.name

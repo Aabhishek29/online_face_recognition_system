@@ -18,7 +18,7 @@
         <canvas id="canvas">
 
         </canvas>
-        <form id="form" action="submitData" method="post" autocomplete="off">
+        <form id="form" action="submitData" method="post" autocomplete="off" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="input-field">
                 <label class="label-text">Name:</label><br>
@@ -31,7 +31,7 @@
                 <p class="error-msg" hidden>*please enter your student Id</p>
             </div>
             <div class="input-field">
-                <label class="label-text">Email:</label>
+                <label class="label-text">Email:</label><br>
                 <input class="text-input" type="email" name="email" id="email" placeholder="abc@xyz.com">
                 <p class="error-msg" hidden>*please enter valid email Id</p>
             </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="input-field">
                 <label class="label-text">Upload your image:</label><br>
-                <input style="margin: 10px;" type="file" name="image" id="image">
+                <input style="margin: 10px;" type="file" name="imgup" id="imgup">
                 <p class="error-msg" hidden>*please upload your clear image</p>
             </div>
             
