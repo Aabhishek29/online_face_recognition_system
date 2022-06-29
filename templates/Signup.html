@@ -1,0 +1,87 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/Enrollment.css' %}?{% now 'U' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'javascript/Enrollment.js' %}?{% now 'U' %}" ></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav id="nav-bar">
+        <header id="header-text">Online Face Recognition Attendance System</header>
+    </nav>
+    <h2 id="intro-text">SignUp in System</h2>
+    <div id="middle-context">
+        <canvas id="canvas">
+
+        </canvas>
+        <form id="form" action="submitData" method="post" autocomplete="off" enctype="multipart/form-data">
+            {% csrf_token %}
+           
+            {{ form.as_p }}
+            
+            <input class="btn" type="submit" value="Submit">
+        </form>
+        <div>
+            <header style="font-weight: bold; font-size: 22px;">Note :-</header>
+            <p id="notify-text">1. Please wait for a while after filling your email its take little bit time to send
+                OTP on your email.
+            </p>
+            <p id="notify-text">2. Please upload clear image of your face not contain more than one face.
+            </p>
+            <button class="btn" onclick="">Resend OTP</button>
+       </div>
+    </div>
+    <footer id="footer">
+        <a href="Enrollment" class="navigation-text">Enrollment</a>
+
+        <a href="" class="navigation-text" >SignIn</a>
+    </footer>
+    <script>
+        var canvas = document.getElementById('canvas');
+        context = canvas.getContext('2d');
+        console.log("file connected");
+        make_base();
+
+        function make_base()
+        {
+          base_image = new Image();
+          console.log(base_image)
+          base_image.src = "{% static 'images/user_default_image.png' %}?{% now 'U' %}";
+          base_image.onload = function(){
+            context.drawImage(base_image, 0, 0,300,150);
+          }
+        }
+    </script>
+</body>
+</html>
+
+
+ <!-- <div class="input-field">
+                <label class="label-text">Name:</label><br>
+                <input class="text-input" type="text" name="name" id="name" placeholder="name">
+                <p class="error-msg" hidden>*please enter name</p>
+            </div>
+            <div class="input-field">
+                <label class="label-text">Student Id:</label><br>
+                <input class="text-input" type="number" name="sid" id="sid" placeholder="student id">
+                <p class="error-msg" hidden>*please enter your student Id</p>
+            </div>
+            <div class="input-field">
+                <label class="label-text">Email:</label><br>
+                <input class="text-input" type="email" name="email" id="email" placeholder="abc@xyz.com">
+                <p class="error-msg" hidden>*please enter valid email Id</p>
+            </div>
+            <div class="input-field">
+                <label class="label-text">OTP:</label><br>
+                <input class="text-input" type="number" name="otp" id="opt" placeholder="otp">
+                <p class="error-msg" hidden>*wrong OTP please click on resend button</p>
+            </div>
+            <div class="input-field">
+                <label class="label-text">Upload your image:</label><br>
+                <input style="margin: 10px;" type="file" name="imgup" id="imgup">
+                <p class="error-msg" hidden>*please upload your clear image</p>
+            </div> -->
