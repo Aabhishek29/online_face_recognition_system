@@ -96,7 +96,7 @@ input[type=number] {
 #footer{
     position: absolute;
     bottom: 0;
-    background-color: #8b5f0c;
+    background-color: #f5a614;
     width: 100vw;
     display: inline-flex;
 }
@@ -112,6 +112,6 @@ input[type=number] {
 }
 
 .navigation-text:hover{
-    background-color: #0d3c88;
+    background-color: #8b5f0c;
     /* color: #146af5; */
 }

@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import math
 import random
 import face_recognition
@@ -16,15 +17,21 @@ validNameRegex = re.compile(r'^([a-z]+)*( [a-z]+)*$',re.IGNORECASE)
 
 validstudentId = '^[0-9]+$'
 
-temp = EnrollStudent()
+student_object = EnrollStudent()
+copy_instance = EnrollStudent()
+
+copy_instance = None
+
+otp_val = "0000"
+
 # Create your views here.
 @gzip.gzip_page
 def home(request):
-    try:
-        cam = VideoCamera()
-        return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
-    except Exception as e:
-        print(e)
+    # try:
+    #     cam = VideoCamera()
+    #     return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
+    # except Exception as e:
+    #     print(e)
     return render(request, 'Enrollment.html')
 
 
@@ -34,17 +41,20 @@ def enrollmentForm(request):
 
 
 def submitData(request):
-    global temp
+    global student_object
+    global copy_instance
     if request.method == 'POST':
         print('fetching form data')
         # student = EnrollmentForm(request.POST, request.FILES)
-        temp.name = request.POST['name'] + "hello temp"
-        temp.emailId = request.POST['email']
-        temp.sid = request.POST['sid']
-        temp.img = request.FILES['imgup']
-        print(temp.img)
-        # if validate_data(temp) and send_otp(temp.emailId):
-        #     return render(request,'checkOtp.html')
+        student_object.name = request.POST['name'] + "hello temp"
+        student_object.emailId = request.POST['email']
+        student_object.sid = request.POST['sid']
+        student_object.img = request.FILES['imgup']
+
+        copy_instance = student_object
+        print(student_object.img)
+        if validate_data(student_object) and send_otp(student_object.emailId):
+            return render(request,'checkOtp.html')
             # try:
             #     temp.save()
             #     print("data stored successfully")
@@ -61,6 +71,39 @@ def submitData(request):
         #     messages.info(request, "Something went wrong...")
         return HttpResponseRedirect('/')
     # return HttpResponse("<h1>Data</h1>")
+
+def validateOTP(request):
+    global student_object
+    if request.method == 'GET':
+        print("OTP verifing")
+        firstVal = request.GET['input1']
+        secondVal = request.GET['input2']
+        thirdVal = request.GET['input3']
+        fourthVal = request.GET['input4']
+
+        val = firstVal+secondVal+thirdVal+fourthVal
+
+        print(f'OTP genrated is: {otp_val} and OTP user entered is: {val}')
+        print(f'OTP genrated is: {type(otp_val)} and OTP user entered is: {type(val)}')
+        if(str(val)==str(otp_val)):
+            print("OTP varified")
+            if copy_instance!=None:
+                copy_instance.save()
+            else:
+                print("Something went erong")
+                return HttpResponse("Wrong")
+            # if not detect_face(student_object.img):
+            #     messages.add_message(request,1,"Face not recognised")
+            #     student_object.delete()
+            #     print("Face not found")
+            #     return render(request,'Signup.html')
+            student_object.clean()
+            print("OTP varified sucessfully with image")
+            return render(request,'SignUp.html')
+        else:
+            return HttpResponseRedirect('/')
+
+    return HttpResponse("<h1>OTP Not Matched</h1>")
 
 
 class VideoCamera(object):
@@ -102,9 +145,6 @@ def validate_data(param)->bool:
     temp = param.sid
 
     if len(temp) < 7 or not re.match(validstudentId,temp):
-        return False
-    
-    if not detect_face(param.img):
         return False
 
     return True

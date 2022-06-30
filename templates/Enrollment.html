@@ -1,12 +1,25 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/Enrollment.css' %}?{% now 'U' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'javascript/Enrollment.js' %}?{% now 'U' %}" ></script>
     <title>Document</title>
 </head>
 <body>
-    
+    <nav id="nav-bar">
+        <header id="header-text">Online Face Recognition Attendance System</header>
+    </nav>
+    <div id="middle-context">
+
+    </div>
+    <footer id="footer">
+        <a href="home" class="navigation-text">Enrollment</a>
+
+        <a href="\" class="navigation-text" >SignIn</a>
+    </footer>
 </body>
 </html>
