@@ -7,14 +7,14 @@ class EnrollmentForm(forms.ModelForm):
         model = EnrollStudent
         fields = '__all__'
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'input-field', 'required': 'True','autocomplete':"off"}),
-            'sid': forms.NumberInput(attrs={'class': 'input-field', 'required': 'True','autocomplete':"off"}),
-            'emailId' : forms.EmailInput(attrs={'class': 'input-field','required':'True', 'autocomplete':'off'}),
-            'img' : forms.FileInput(attrs= {'class': 'input-field','required':'True', 'autocomplete':'off'})
+            'name': forms.TextInput(attrs={'class': 'input-field', 'required': 'True', 'autocomplete': "off"}),
+            'sid': forms.NumberInput(attrs={'class': 'input-field', 'required': 'True', 'autocomplete': "off"}),
+            'emailId': forms.EmailInput(attrs={'class': 'input-field', 'required': 'True', 'autocomplete': 'off'}),
+            'img': forms.FileInput(attrs={'class': 'input-field', 'required': 'True', 'autocomplete': 'off'})
         }
         labels = {
             'name': 'Student Name:',
             'sid': 'Student Id:',
-            'emailId' : 'Email Id',
-            'img' : 'Upload your image:'
+            'emailId': 'Email Id',
+            'img': 'Upload your image:'
         }

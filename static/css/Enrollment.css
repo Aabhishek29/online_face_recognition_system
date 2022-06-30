@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 #nav-bar{
-    background-color: #146af5;
+    background-color: #f5a614;
     width: 100vw;
     padding: 10px;
 }
@@ -47,7 +47,7 @@
     margin: 20px;
 }
 
-#notify-text{
+.notify-text{
     font-size: 18px;
     margin: 10px;
     width: 25vw;
@@ -82,7 +82,7 @@ input[type=number] {
     margin-top: 20px;
     margin-left: 10px;
     color: white;
-    background-color: #146af5;
+    background-color: #f5a614;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 15px;
@@ -91,12 +91,12 @@ input[type=number] {
     cursor: pointer;
 }
 .btn:hover{
-    background-color: #0d3c88;
+    background-color: #f5a614;
 }
 #footer{
     position: absolute;
     bottom: 0;
-    background-color: #146af5;
+    background-color: #8b5f0c;
     width: 100vw;
     display: inline-flex;
 }
