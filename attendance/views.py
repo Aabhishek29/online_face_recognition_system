@@ -26,7 +26,7 @@ copy_instance = None
 otp_val = "0000"
 
 # Create your views here.
-@gzip.gzip_page
+
 def home(request):
     list_data = []
     val = EnrollStudent.objects.all()
@@ -36,10 +36,10 @@ def home(request):
         print(i)
     return render(request, 'Enrollment.html',{'messages':list_data})
 
-
+@gzip.gzip_page
 def openWebCam(request):
     try:
-        data = request.GET['file_name']
+        data = "abhishek"
     except Exception as e:
         print(e)
     try:
@@ -50,7 +50,7 @@ def openWebCam(request):
     return render(request,'Enrollment.html')
 
 def isImageVarified(request):
-    pass
+    return HttpResponse("<h1>hello</h1>")
 
 
 def enrollmentForm(request):
@@ -121,19 +121,19 @@ class VideoCamera(object):
 
     def get_frame(self,request,imageName):
         jpeg = self.frame
-        jpeg = cv2.cvtColor(jpeg,cv2.COLOR_BGR2RGB)
         aceloc = face_recognition.face_locations(jpeg)
         print(aceloc)
         try:
             if len(aceloc)==1:
                 aceloc = aceloc[0]
+                
                 faceencode = face_recognition.face_encodings(jpeg)
                 faceencode = faceencode[0]
                 cv2.rectangle(jpeg, (aceloc[3], aceloc[0]), (aceloc[1], aceloc[2]), (255, 0, 255), 2)
                 auth = EnrollStudent.objects.get(name=imageName)
                 imgvar = face_recognition.load_image_file(f"media/{auth.img}")
                 imgvar = cv2.cvtColor(imgvar,cv2.COLOR_BGR2RGB)
-
+                imgVar = cv2.rotate(imgVar, cv2.ROTATE_90_COUNTERCLOCKWISE)
                 faceloc = face_recognition.face_locations(imgvar)
                 if len(faceloc) == 1:
                     faceencode2 = face_recognition.face_encodings(imgvar)[0]

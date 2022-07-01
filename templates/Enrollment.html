@@ -19,10 +19,10 @@
             <h2 class="intro-text">Student Name:-</h2>
             <ul class="messages">
                 {% for message in messages %}
-                    <li style="color: blue; position: relative; left: 10%; margin-bottom: 5px; cursor:pointer;" onclick="loadInfo('{{ message }}')" 
-                        {% if message.tags %} class="{{ message.tags }}"{% endif %} id="{{ message }}">
+                    <a style="color: blue; position: relative; left: 10%; margin-bottom: 5px; cursor:pointer;" onclick="loadInfo('{{ message }}')" 
+                        {% if message.tags %} class="{{ message.tags }}"{% endif %} id="{{ message }}" href="openWebCam">
                             {{ message }}
-                    </li>
+            </a><br>
                 {% endfor %}
                 </ul>
         </div>
