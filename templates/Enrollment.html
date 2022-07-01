@@ -13,14 +13,44 @@
     <nav id="nav-bar">
         <header id="header-text">Online Face Recognition Attendance System</header>
     </nav>
-    <h2 id="intro-text">Enroll in System</h2>
+    <h2 class="intro-text">Enroll in System</h2>
     <div id="middle-context">
-
+        <div id="left-panel">
+            <h2 class="intro-text">Student Name:-</h2>
+            <ul class="messages">
+                {% for message in messages %}
+                    <li style="color: blue; position: relative; left: 10%; margin-bottom: 5px; cursor:pointer;" onclick="loadInfo('{{ message }}')" 
+                        {% if message.tags %} class="{{ message.tags }}"{% endif %} id="{{ message }}">
+                            {{ message }}
+                    </li>
+                {% endfor %}
+                </ul>
+        </div>
     </div>
     <footer id="footer">
         <a href="home" class="navigation-text">Enrollment</a>
 
         <a href="\" class="navigation-text" >SignIn</a>
     </footer>
+
+    <script>
+        function loadInfo(msgID){
+            console.log("function called:",msgID);
+            var ele = document.getElementById(msgID).value;
+            $.ajax({
+                type: "GET",
+                url: "/openWebCam",
+                data: { 
+                        file_name : msgID
+                    },  
+                success:  function(response){
+                       console.log(response)
+                   },
+                error: function(e){
+                    console.log(e)
+                }
+            });
+        }
+    </script>
 </body>
 </html>

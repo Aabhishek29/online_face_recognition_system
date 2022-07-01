@@ -17,7 +17,7 @@
 }
 
 
-#intro-text{
+.intro-text{
     margin: 10px;
     color: #0d3c88;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -114,4 +114,16 @@ input[type=number] {
 .navigation-text:hover{
     background-color: #8b5f0c;
     /* color: #146af5; */
+}
+
+#middle-context{
+    width: 100%;
+    display: inline-flex;
+}
+
+#left-panel{
+    width: 30%;
+    height: 80vh;
+    margin: 10px;
+    background-color: aquamarine;
 }

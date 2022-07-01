@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpRespons
 from django.shortcuts import render
 import cv2
 from django.views.decorators import gzip
+from requests import request
 from .models import EnrollStudent
 from .form import EnrollmentForm
 from django.contrib import messages
@@ -27,12 +28,29 @@ otp_val = "0000"
 # Create your views here.
 @gzip.gzip_page
 def home(request):
-    # try:
-    #     cam = VideoCamera()
-    #     return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
-    # except Exception as e:
-    #     print(e)
-    return render(request, 'Enrollment.html')
+    list_data = []
+    val = EnrollStudent.objects.all()
+    print(val)
+    for i in val:
+        list_data.append(i)
+        print(i)
+    return render(request, 'Enrollment.html',{'messages':list_data})
+
+
+def openWebCam(request):
+    try:
+        data = request.GET['file_name']
+    except Exception as e:
+        print(e)
+    try:
+        cam = VideoCamera()
+        return StreamingHttpResponse(gen(request,cam,data), content_type="multipart/x-mixed-replace;boundary=frame")
+    except Exception as e:
+        print(e)
+    return render(request,'Enrollment.html')
+
+def isImageVarified(request):
+    pass
 
 
 def enrollmentForm(request):
@@ -46,7 +64,7 @@ def submitData(request):
     if request.method == 'POST':
         print('fetching form data')
         # student = EnrollmentForm(request.POST, request.FILES)
-        student_object.name = request.POST['name'] + "hello temp"
+        student_object.name = request.POST['name']
         student_object.emailId = request.POST['email']
         student_object.sid = request.POST['sid']
         student_object.img = request.FILES['imgup']
@@ -55,23 +73,9 @@ def submitData(request):
         print(student_object.img)
         if validate_data(student_object) and send_otp(student_object.emailId):
             return render(request,'checkOtp.html')
-            # try:
-            #     temp.save()
-            #     print("data stored successfully")
-            # except Exception as e:
-            #     print(e)
-
-        # print(student)
-        # if student.is_valid():
-        #     student.save()
-        #     print("Successfully Done...")
-        #     messages.info(request, "Successfully Done...")
-        # else:
-        #     print("Something went wrong...")
-        #     messages.info(request, "Something went wrong...")
         return HttpResponseRedirect('/')
-    # return HttpResponse("<h1>Data</h1>")
-
+    
+    
 def validateOTP(request):
     global student_object
     if request.method == 'GET':
@@ -115,14 +119,32 @@ class VideoCamera(object):
     def __del__(self):
         self.video.release()
 
-    def get_frame(self):
+    def get_frame(self,request,imageName):
         jpeg = self.frame
         jpeg = cv2.cvtColor(jpeg,cv2.COLOR_BGR2RGB)
         aceloc = face_recognition.face_locations(jpeg)
         print(aceloc)
-        if len(aceloc)==1:
-            aceloc = aceloc[0]
-            cv2.rectangle(jpeg, (aceloc[3], aceloc[0]), (aceloc[1], aceloc[2]), (255, 0, 255), 2)
+        try:
+            if len(aceloc)==1:
+                aceloc = aceloc[0]
+                faceencode = face_recognition.face_encodings(jpeg)
+                faceencode = faceencode[0]
+                cv2.rectangle(jpeg, (aceloc[3], aceloc[0]), (aceloc[1], aceloc[2]), (255, 0, 255), 2)
+                auth = EnrollStudent.objects.get(name=imageName)
+                imgvar = face_recognition.load_image_file(f"media/{auth.img}")
+                imgvar = cv2.cvtColor(imgvar,cv2.COLOR_BGR2RGB)
+
+                faceloc = face_recognition.face_locations(imgvar)
+                if len(faceloc) == 1:
+                    faceencode2 = face_recognition.face_encodings(imgvar)[0]
+                    flag = face_recognition.compare_faces(faceencode2,faceencode)
+                    if flag==True:
+                        return isImageVarified(request)
+                    else:
+                        return HttpResponse("Not")
+        except Exception as e:
+            self.video.release()
+            print(e)
 
         _, jpeg = cv2.imencode('.jpg', jpeg)
         return jpeg.tobytes()
@@ -132,9 +154,9 @@ class VideoCamera(object):
             (self.grabbed, self.frame) = self.video.read()
 
 
-def gen(camera):
+def gen(request,camera,data):
     while True:
-        frame = camera.get_frame()
+        frame = camera.get_frame(request,data)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
