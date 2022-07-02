@@ -83,7 +83,6 @@ def enrollmentForm(request):
     sid = ""
     img = ""
     if request.method == 'POST':
-        
         if 'signupbtn' in request.POST:
             print('fetching form data')
         # student = EnrollmentForm(request.POST, request.FILES)
@@ -127,7 +126,6 @@ def enrollmentForm(request):
             else:
                 print("otp not varified")
                 return HttpResponseRedirect('/')
-
         return HttpResponse("<h1>OTP Not Matched</h1>")
     return render(request, 'Signup.html', {'flag':1})
 
@@ -189,7 +187,7 @@ class VideoCamera(object):
         self.waiting_time += 1
         print(self.waiting_time)
         global VID_FLAG
-        if self.waiting_time == 10:
+        if self.waiting_time == 50:
             self.video.release()
             VID_FLAG = 1
             return HttpResponse("hello")
@@ -218,8 +216,6 @@ def validate_data(name,sid)->bool:
 
     if len(sid) < 7 or not re.match(validstudentId,sid):
         return False
-
-
     return True
 
 def detect_face(img):
@@ -252,3 +248,7 @@ def send_otp(emailId):
     else:   
         print('sent succesfully')
     return True
+
+
+def adminPanel(request):
+    return HttpResponseRedirect('admin')
