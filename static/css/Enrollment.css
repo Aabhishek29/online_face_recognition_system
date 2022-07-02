@@ -125,5 +125,12 @@ input[type=number] {
     width: 30%;
     height: 80vh;
     margin: 10px;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
+    border: 2px solid black;
+}
+
+.label-tt{
+    color: #0d3c88;
+    font-size: 25px;
+    margin: 15px;
 }

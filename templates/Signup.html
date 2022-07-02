@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{% static 'css/Enrollment.css' %}?{% now 'U' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'javascript/Enrollment.js' %}?{% now 'U' %}" ></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -15,15 +20,16 @@
     </nav>
     <h2 id="intro-text">SignUp in System</h2>
     <div id="middle-context">
-        <canvas id="canvas">
+        <!-- <canvas id="canvas">
 
-        </canvas>
-        <form id="form" action="submitData" method="post" autocomplete="off" enctype="multipart/form-data">
+        </canvas> -->
+        
+        <form id="form" action="" method="post" autocomplete="off" enctype="multipart/form-data">
             {% csrf_token %}
            
             <!-- {{ form.as_p }} -->
-            
- <div class="input-field">
+            {% if flag == 1 %}
+            <div class="input-field">
                 <label class="label-text">Name:</label><br>
                 <input class="text-input" type="text" name="name" id="name" placeholder="name">
                 <p class="error-msg" hidden>*please enter name</p>
@@ -43,22 +49,48 @@
                 <input class="text-input" type="number" name="otp" id="opt" placeholder="otp">
                 <p class="error-msg" hidden>*wrong OTP please click on resend button</p>
             </div> -->
-            <div class="input-field">
-                <label class="label-text">Upload your image:</label><br>
-                <input style="margin: 10px;" type="file" name="imgup" id="imgup">
-                <p class="error-msg" hidden>*please upload your clear image</p>
+            <button class="btn btn-primary" type="submit" value="Submit" name="signupbtn">SignUp</button>
+
+        {% elif flag == 0 %}
+        <div class="input-field">
+            <label class="label-text">Name:</label><br>
+            <input class="text-input" value={{name}} type="text" name="name" id="name" placeholder="name" readonly>
+            <p class="error-msg" hidden>*please enter name</p>
+        </div>
+        <div class="input-field">
+            <label class="label-text">Student Id:</label><br>
+            <input class="text-input" value={{sid}} type="number" name="sid" id="sid" placeholder="student id" readonly>
+            <p class="error-msg" hidden>*please enter your student Id</p>
+        </div>
+        <div class="input-field">
+            <label class="label-text">Email:</label><br>
+            <input class="text-input" value={{emailId}} type="email" name="email" id="email" placeholder="abc@xyz.com" readonly>
+            <p class="error-msg" hidden>*please enter valid email Id</p>
+        </div>
+        <div class="input-field">
+            <label class="label-text">Upload your image:</label><br>
+            <input style="margin: 10px;" type="file" name="imgup" id="imgup">
+            <p class="error-msg" hidden>*please upload your clear image</p>
+        </div>
+            <h1 style="overflow-y: hidden;">Please Enter OTP to Check</h1>
+            <div class="d-flex flex-row mt-5">
+                <input type="text" name="input1" onclick="next_function()" placeholder="0" class="form-control" maxlength="1" style="margin: 5px; border:2px solid blue; text-align:center;font-weight:bold" autofocus="">
+                <input type="text" name="input2"  placeholder="0" class="form-control" maxlength="1" style="margin: 5px; border:2px solid blue; text-align:center;font-weight:bold">
+                <input type="text" name="input3"  placeholder="0" class="form-control" maxlength="1" style="margin: 5px; border:2px solid blue; text-align:center;font-weight:bold">
+                <input type="text" name="input4"  placeholder="0" class="form-control" maxlength="1" style="margin: 5px; border:2px solid blue; text-align:center;font-weight:bold">
             </div>
-            <input class="btn" type="submit" value="Submit">
-        </form>
-        <form action="openWebCam" method="get">
+            <button class="btn btn-primary" type="submit" style="margin-top: 10vh;" name="otpbtn">Submit</button>
+          
+        {% endif %}
+    </form>
+        <div>
             <header style="font-weight: bold; font-size: 22px;">Note :-</header>
             <p class="notify-text">1. Please wait for a while after filling your email its take little bit time to send
                 OTP on your email.
             </p>
             <p class="notify-text">2. Please upload clear image of your face not contain more than one face.
             </p>
-            <button class="btn" onclick="">Resend OTP</button>
-        </fomr>
+        </div>
     </div>
     <footer id="footer">
         <a href="home" class="navigation-text">Enrollment</a>
@@ -79,6 +111,14 @@
           base_image.onload = function(){
             context.drawImage(base_image, 0, 0,300,150);
           }
+        }
+        function next_function(){
+            console.log("hello world")
+            $(".form-control").keyup(function () {
+                if (this.value.length == this.maxLength) {
+                  $(this).next('.form-control').focus();
+                }
+          });
         }
     </script>
 </body>
